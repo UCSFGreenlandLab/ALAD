@@ -1,0 +1,162 @@
+
+# This code implements the 2025/26 ISHLT ALAD consensus definition
+# and was used to classify ALAD in UCSF and LTOG data sets.
+# 
+# This code is Copyright (c) 2025 by John Greenland. All rights reserved.
+# When used in research publications, it should be appropriately acknowledged
+# and referenced. As per the FreeBSD license, redistribution and use in source and
+# binary forms, with or without modification, are permitted provided that the 
+# following conditions are met:
+
+# 1. Redistributions of source code must retain the above copyright notice, 
+# this list of conditions and the following disclaimer. Redistributions in binary form
+# must reproduce the above copyright notice,this list of conditions and the following
+# disclaimer in the documentation  and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
+# THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. THE SOFTWARE IS FOR RESEARCH USE ONLY
+# AND IS NOT INTENDED FOR USE IN CLINICAL DECISION MAKING.
+
+# Possible ALAD levels
+alad.levels <- c("ALAD - Recovered", "ALAD - Persistent", "ALAD - Progressive", "ALAD - Rapidly Progressive", "ALAD - No follow up FEV1s")
+
+# alad.fev.bl
+# Function to calculate ALAD (acute lung allograft dysfunction) based on FEV1 values
+# post.tx.days is a list of days post transplant, which correspond to the
+# fev1s list of FEV1 measurements on those days.
+# target.day is the day on which ALAD should be determined
+# baseline window is the number of days before the target.day to use
+# in determining the FEV1 maximum baseline.
+# f.u.window is the number of days after the target.day to stratify into 
+# ALAD Recovered/Persistent/Progressive categories.
+# The percent.drop is the FEV1 threshold for determining ALAD
+
+alad.fev.bl <- function(post.tx.days, fev1s, target.day, baseline.window=180
+                        , f.u.window=90, percent.drop=10) {
+  
+  # Create a data frame with FEV1 values ordered by date, most recent first
+  these.pfts <- data.frame(day = post.tx.days, fev1 = fev1s) %>%
+    arrange(desc(day))
+  
+  # Check for duplicate days in the post-transplant days
+  if (any(duplicated(post.tx.days))) {
+    return("Duplicate FEV1 days found")
+  }
+  
+  # Find the most recent FEV1 at or before the target date
+  target.day <- max(post.tx.days[post.tx.days <= target.day])
+  current.fev1 <- these.pfts$fev1[which(these.pfts$day == target.day)]
+  
+  # Calculate the baseline FEV1 value within a specified window before the target day
+  baseline.pfts <- these.pfts %>%
+    filter((target.day - day) < baseline.window) %>%
+    filter(day < target.day)
+  
+  if (nrow(baseline.pfts) > 0) {
+    baseline <- max(baseline.pfts$fev1)
+  } else {
+    # If no PFTs in the baseline window, use the most recent FEV1 before the target day
+    baseline.pfts <- these.pfts %>%
+      filter(day < target.day)
+    
+    if (nrow(baseline.pfts) == 0) {
+      return("No prior FEV1")
+    }
+    
+    baseline <- baseline.pfts$fev1[1] # Most recent value
+  }
+
+  fev1.of.baseline <- current.fev1 / baseline
+  
+  # Check for NA values in the FEV1 ratios
+  if (is.na(fev1.of.baseline)) {
+    return("Error - Did you remove NAs?")
+  }
+  
+  # Determine if there is a significant decline in FEV1 (ALAD)
+  # Typically a 10% or greater decline
+  if (fev1.of.baseline > ((100 - percent.drop) / 100)) {
+    return("Not ALAD")
+  }
+  
+  # Find follow-up data to determine the type of ALAD
+  fu.pfts <- these.pfts %>%
+    filter((day - target.day) <= f.u.window) %>%
+    filter(day > target.day)
+  
+  # Recovery is based on the best follow-up FEV1 within the specified window
+  if (nrow(fu.pfts) > 0) {
+    fu.fev1 <- max(fu.pfts$fev1)
+  } else {
+    # If no PFTs in the recovery window, use the first available follow-up FEV1
+    fu.pfts <- these.pfts %>%
+      filter(day > target.day) %>%
+      arrange(day)
+    
+    if (nrow(fu.pfts) == 0) {
+      return("ALAD - No follow up FEV1s")
+    }
+    
+    fu.fev1 <- fu.pfts$fev1[1]
+  }
+  
+  # Determine the type of ALAD based on follow-up FEV1 values
+  # if follow up FEV1 is above 90% of the prior baseline -> recovered
+  if (fu.fev1 > ((100 - percent.drop) / 100) * baseline) {
+    return("ALAD - Recovered")
+  } 
+  # If there is a further >= 10% decline from the current, this is progressive, which
+  # will be separated in the next section. If not, it is persistent.
+  else if (fu.fev1 > ((100 - percent.drop) / 100) * current.fev1) {
+      return("ALAD - Persistent")
+      } 
+  else {
+    # Check for rapidly progressive ALAD within 30 days after the target day
+    fu.pfts <- these.pfts %>%
+      filter((day - target.day) <= 30) %>%
+      filter(day > target.day)
+    
+    if (nrow(fu.pfts) > 0) {
+      fu.fev1 <- max(fu.pfts$fev1)
+      if (fu.fev1 <= ((100 - percent.drop) / 100) * current.fev1) {
+        return("ALAD - Rapidly Progressive")
+      }
+    }
+    return("ALAD - Progressive")
+  }
+}
+
+# Wrapper function to apply ALAD calculation for a specific patient ID and day
+ltog.wrapper <- function(ID, DAY, baseline.window=180, percent.drop=10) {
+  # find pulmonary function tests for a given patient
+  id.pfts <- pfts %>%
+    filter(ltog_id == ID)
+  
+  return(alad.fev.bl(id.pfts$post.tx.days, id.pfts$pft_fev1, DAY
+                     , baseline.window, f.u.window=90, percent.drop))
+}
+
+# EXAMPLE: This is use case example with multi-threading for efficiency.
+# "pfts" is a data frame including a row for each spirometry.
+# Columns include the ltog_id (participant ID), post.tx.days (days post 
+# transplantation), and pft_fev1 (FEV1 values in liters for each day).
+
+# sapply(c("foreach", "dplyr", "magrittr", "doParallel", "tidyr"), require, character.only = T)
+#
+# numCores <- detectCores()
+# cl <- makeCluster(numCores-1)
+# registerDoParallel(cl)
+#
+# ALAD.assignments <- foreach(i = 1:nrow(pfts), .combine = c, .packages = c("magrittr","dplyr")) %dopar% {
+#   ltog.wrapper(pfts$ltog_id[i], pfts$post.tx.days[i], baseline.window = 180)
+# }
+#
+# stopCluster(cl)
