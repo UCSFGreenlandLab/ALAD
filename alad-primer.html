@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ALAD: A New Framework for Lung Allograft Dysfunction</title>
+  <style>
+    :root {
+      --bg: #f7f7f3;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #5b6472;
+      --accent: #2f6f6d;
+      --accent-soft: #e6f2f1;
+      --border: #dde3e6;
+      --shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fafaf7 0%, var(--bg) 100%);
+      line-height: 1.65;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 20px 72px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--accent) 0%, #4b8b87 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 40px 34px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+    }
+
+    .kicker {
+      display: inline-block;
+      background: rgba(255,255,255,0.16);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 1.05rem;
+      max-width: 70ch;
+      opacity: 0.95;
+    }
+
+    .toc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+    }
+
+    .toc h2, .section h2 {
+      margin-top: 0;
+      font-size: 1.35rem;
+    }
+
+    .toc ul {
+      margin: 0;
+      padding-left: 20px;
+      columns: 2;
+      gap: 24px;
+    }
+
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .toc a:hover { text-decoration: underline; }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 30px 28px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .section p { margin: 0 0 14px; }
+    .section p:last-child { margin-bottom: 0; }
+
+    .callout {
+      background: var(--accent-soft);
+      border-left: 5px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 14px;
+      margin: 18px 0;
+    }
+
+    .callout strong { color: #1f4f4d; }
+
+    ul.clean {
+      margin: 10px 0 16px 20px;
+      padding: 0;
+    }
+
+    ul.clean li { margin-bottom: 10px; }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+	  
+	  .figure {
+  width: 100%;
+  max-width: 800px;
+  display: block;
+  margin: 24px auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.figure-caption {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+    footer {
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+      padding-top: 16px;
+    }
+
+    @media (max-width: 720px) {
+      .wrap { padding: 22px 14px 56px; }
+      .hero, .section, .toc { border-radius: 18px; }
+      .hero, .section { padding: 24px 20px; }
+      .toc ul { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="kicker">Lung transplantation · ALAD</div>
+      <h1>ALAD: The 2026 ISHLT definitions and their biologica correlates</h1>
+      <p class="subtitle">
+        This post summarizes the <a href="https://www.jhltonline.org/article/S1053-2498(26)01733-X/fulltext">2026 International Society for Heart and Lung Transplantation consensus definition of Acute Lung Allograft Dysfunction (ALAD)</a>, its validation in the LTOG cohort, the major etiologic categories, and what the molecular data are beginning to reveal.
+      </p>
+    </section>
+
+<nav class="toc" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <ul>
+        <li><a href="#consensus">2026 consensus definition</a></li>
+        <li><a href="#validation">Validation in LTOG</a></li>
+        <li><a href="#etiologies">ALAD etiologies</a></li>
+        <li><a href="#molecular">Molecular diagnostics and mechanisms</a></li>
+        <li><a href="#takeaways">Conclusions / take-aways</a></li>
+      </ul>
+</nav>
+
+    <article class="section" id="consensus">
+      <h2>2026 consensus definition</h2>
+      <p>
+      Acute Lung Allograft Dysfunction, or ALAD, is meant to give transplant teams a common language for an important clinical problem: a meaningful drop in lung function after transplant that may signal graft injury. While ALAD has been described in the literature for over 10 years, it has been inconsistently defined. </p>
+      <p>
+        The <a href="https://www.jhltonline.org/article/S1053-2498(26)01733-X/fulltext">2026 ISHLT consensus definition</a> describes ALAD as a decline in FEV1 of at least 10% compared with the patient’s maximum FEV1 from the prior six months.
+      </p>
+      <p>
+        ALAD is not a diagnosis by itself. It is a syndrome and a state of increased risk . When a patient meets ALAD criteria, the next step is to look for the reason: rejection, infection, airway problems, aspiration, medication toxicity, malignancy, or another process affecting the graft.
+      </p>
+      <div class="callout">
+        <strong>Why this matters:</strong> a shared definition makes it easier to compare management across centers, enroll patients into trials, and study whether early trajectories predict longer-term graft outcomes.
+      </div>
+    </article>
+
+    <article class="section" id="validation">
+      <h2>Validation in LTOG</h2>
+      <p>
+        The new definition was <a href = "https://www.jhltonline.org/article/S1053-2498(26)00005-7/fulltext">tested in the multicenter Lung Transplant Outcomes Group (LTOG) cohort</a>, which included thousands of recipients and tens of thousands of spirometry measurements across many years of follow-up.
+      </p>
+      <p>
+        The validation work showed that a 10% threshold struck a useful balance between sensitivity and specificity. Thresholds in roughly the 9% to 15% range performed similarly, but 10% was a practical and well-supported choice.
+      </p>
+      <p>
+        The six-month baseline window also performed better than a shorter lookback window. It captured slower declines that might otherwise be missed, while keeping prognostic performance strong. In other words, the longer window helps identify the “slow-burn” cases that can still carry real risk.
+      </p>
+      <p>
+        Patients who met ALAD criteria had a markedly higher risk of graft failure, but ALAD was not always a one-way street. A substantial fraction recovered back toward baseline lung function, which is why the 90-day trajectory after the event is so informative.
+      </p>
+      <div class="callout">
+      <strong>Clinical takeaway:</strong> Outcomes from the 90 days after ALAD is identify help separate patients who recover from those who keep worsening.</div>
+</article>
+
+    <article class="section" id="etiologies">
+      <h2>ALAD etiologies</h2>
+      <p>
+        ALAD is heterogeneous. It is best thought of as a syndrome with multiple possible causes rather than a single disease entity.
+      </p>
+      <ul class="clean">
+        <li><strong>Alloimmune ALAD:</strong> injury driven by the immune system, including acute cellular rejection and antibody-mediated rejection.</li>
+        <li><strong>Non-alloimmune ALAD:</strong> infection, airway complications, aspiration, medication toxicity, malignancy, and other non-immune insults.</li>
+<li><strong>Idiopa
