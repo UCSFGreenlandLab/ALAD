@@ -112,6 +112,67 @@
       margin: 18px 0;
     }
 
+    .section::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    .figure {
+      margin: 0 0 16px 0;
+    }
+
+    .figure img {
+      width: 100%;
+      display: block;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .figure figcaption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .figure.float-right {
+      float: right;
+      width: min(42%, 300px);
+      margin: 6px 0 14px 18px;
+    }
+
+    .figure.float-left {
+      float: left;
+      width: min(42%, 300px);
+      margin: 6px 18px 14px 0;
+    }
+
+    .figure-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin: 24px 0;
+    }
+
+    .figure-grid .figure {
+      margin: 0;
+    }
+
+    @media (max-width: 720px) {
+      .figure.float-right,
+      .figure.float-left {
+        float: none;
+        width: 100%;
+        margin: 18px 0;
+      }
+
+      .figure-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .callout strong { color: #1f4f4d; }
 
     ul.clean {
@@ -126,22 +187,6 @@
       font-size: 0.95rem;
       margin-top: 10px;
     }
-	  
-	  .figure {
-  width: 100%;
-  max-width: 800px;
-  display: block;
-  margin: 24px auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-
-.figure-caption {
-  text-align: center;
-  color: #666;
-  font-size: 0.9rem;
-  margin-top: 8px;
-}
 
     footer {
       color: var(--muted);
@@ -156,19 +201,23 @@
       .hero, .section { padding: 24px 20px; }
       .toc ul { columns: 1; }
     }
+	  .citation { display: block; margin-top: 6px; }
+   	  .citation a { color: var(--accent); text-decoration: none; }
+	  .citation a:hover { text-decoration: underline; }
+	  .refmeta { color: var(--muted); font-size: 0.95rem; }
   </style>
 </head>
 <body>
   <main class="wrap">
     <section class="hero">
       <div class="kicker">Lung transplantation · ALAD</div>
-      <h1>ALAD: The 2026 ISHLT definitions and their biologica correlates</h1>
+      <h1>ALAD: an emerging framework for early lung allograft dysfunction</h1>
       <p class="subtitle">
-        This post summarizes the <a href="https://www.jhltonline.org/article/S1053-2498(26)01733-X/fulltext">2026 International Society for Heart and Lung Transplantation consensus definition of Acute Lung Allograft Dysfunction (ALAD)</a>, its validation in the LTOG cohort, the major etiologic categories, and what the molecular data are beginning to reveal.
+        This post summarizes the 2026 ISHLT consensus definition of Acute Lung Allograft Dysfunction (ALAD), its validation in the LTOG cohort, the major etiologic categories, and what the molecular data are beginning to reveal.
       </p>
     </section>
 
-<nav class="toc" aria-label="Table of contents">
+    <nav class="toc" aria-label="Table of contents">
       <h2>Contents</h2>
       <ul>
         <li><a href="#consensus">2026 consensus definition</a></li>
@@ -176,48 +225,189 @@
         <li><a href="#etiologies">ALAD etiologies</a></li>
         <li><a href="#molecular">Molecular diagnostics and mechanisms</a></li>
         <li><a href="#takeaways">Conclusions / take-aways</a></li>
+        <li><a href="#bibliography">Bibliography</a></li>
       </ul>
-</nav>
+    </nav>
 
     <article class="section" id="consensus">
       <h2>2026 consensus definition</h2>
       <p>
-      Acute Lung Allograft Dysfunction, or ALAD, is meant to give transplant teams a common language for an important clinical problem: a meaningful drop in lung function after transplant that may signal graft injury. While ALAD has been described in the literature for over 10 years, it has been inconsistently defined. </p>
-      <p>
-        The <a href="https://www.jhltonline.org/article/S1053-2498(26)01733-X/fulltext">2026 ISHLT consensus definition</a> describes ALAD as a decline in FEV1 of at least 10% compared with the patient’s maximum FEV1 from the prior six months.
+        Acute Lung Allograft Dysfunction, or ALAD, is meant to give transplant teams a common language for an important clinical problem: a meaningful drop in lung function after transplant that may signal graft injury.
       </p>
       <p>
-        ALAD is not a diagnosis by itself. It is a syndrome and a state of increased risk . When a patient meets ALAD criteria, the next step is to look for the reason: rejection, infection, airway problems, aspiration, medication toxicity, malignancy, or another process affecting the graft.
+        The <a href="https://www.jhltonline.org/article/S1053-2498(26)01733-X/fulltext">2026 ISHLT consensus definition</a> describes ALAD as a decline in FEV1 of at least 10% compared with the patient’s maximum FEV1 from the prior six months. That shift matters because it standardizes when a patient should be flagged for closer evaluation.
+      </p>
+      <p>
+        ALAD is not a diagnosis by itself. It is a risk state. When a patient meets ALAD criteria, the next step is to look for the reason: rejection, infection, airway problems, aspiration, medication toxicity, malignancy, or another process affecting the graft.
       </p>
       <div class="callout">
         <strong>Why this matters:</strong> a shared definition makes it easier to compare management across centers, enroll patients into trials, and study whether early trajectories predict longer-term graft outcomes.
       </div>
     </article>
-
-    <article class="section" id="validation">
-      <h2>Validation in LTOG</h2>
+<article class="section" id="validation">
+	
+      <h2>Validation in LTOG data</h2>
+      <figure class="figure float-right">
+        <img src="images/90-day.png" alt="Kaplan-Meier curves showing 90-day ALAD outcomes and graft failure risk">
+        <figcaption>ALAD trajectories at 90 days were strongly associated with long-term graft outcomes.</figcaption>
+      </figure>
       <p>
-        The new definition was <a href = "https://www.jhltonline.org/article/S1053-2498(26)00005-7/fulltext">tested in the multicenter Lung Transplant Outcomes Group (LTOG) cohort</a>, which included thousands of recipients and tens of thousands of spirometry measurements across many years of follow-up.
-      </p>
-      <p>
-        The validation work showed that a 10% threshold struck a useful balance between sensitivity and specificity. Thresholds in roughly the 9% to 15% range performed similarly, but 10% was a practical and well-supported choice.
+        The ISHLT 2026 defintion has been <a href="https://www.jhltonline.org/article/S1053-2498(26)00005-7/fulltext">validated in the multicenter Lung Transplant Outcomes Group (LTOG) cohort</a>, including 86,885 spirometry measurements on 2,877 recipients with a 7.4 year median follow-up time.
+	</p><p>Alternative defintions were assessed based on concordance with graft failure (death or retransplant) risk. Concordance rates how well a statistical model correctly ranks people by risk. This validation work showed that a 10% threshold for FEV1 decline struck a useful balance between sensitivity and specificity. Thresholds in roughly the 9% to 15% range performed similarly, but 10% was a practical and well-supported choice.
       </p>
       <p>
         The six-month baseline window also performed better than a shorter lookback window. It captured slower declines that might otherwise be missed, while keeping prognostic performance strong. In other words, the longer window helps identify the “slow-burn” cases that can still carry real risk.
+		      <figure class="figure float-right">
+        <img src="images/slow-burn.png" alt="18-month landmark analysis comparing ALAD detection windows">
+        <figcaption>The six-month window captures slow-burn declines without sacrificing prognostic power.</figcaption>  
+      </figure>
       </p>
       <p>
-        Patients who met ALAD criteria had a markedly higher risk of graft failure, but ALAD was not always a one-way street. A substantial fraction recovered back toward baseline lung function, which is why the 90-day trajectory after the event is so informative.
-      </p>
+        Two related analyses show that ALAD remains important when it is considered alongside baseline lung allograft dysfunction (BLAD) or chronic lung allograft dysfunction (CLAD). While BLAD was associated poor outcomes compared to no-BLAD, ALAD was associated with increased risk independent of BLAD status.</p><p>Similarly, ALAD was an important risk factor for graft failure whether on not the recipient had CLAD. Patients with both signals tend to have the worst outcomes, indicating that ALAD is a distinct risk state.
+        </p>
+      <p> While 40% of recipients who were in the state of ALAD went on to recovery, persistence or progression were common. ALAD conferred a 4.9-fold increased risk of retransplantation or death. </p>
+	    <p>&nbsp;</p>
+<div class="figure-grid">
+      <figure class="figure">
+        <img src="images/alad_blad.png" alt="ALAD and BLAD combined survival curves">
+        <figcaption>ALAD and BLAD each identify higher-risk groups.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="images/alad_clad.png" alt="ALAD and CLAD combined survival curves">
+        <figcaption>ALAD and CLAD are both independent predictors of graft failure.</figcaption>
+      </figure>
+      </div>
+     
       <div class="callout">
-      <strong>Clinical takeaway:</strong> Outcomes from the 90 days after ALAD is identify help separate patients who recover from those who keep worsening.</div>
-</article>
-
-    <article class="section" id="etiologies">
+        <strong>Clinical takeaway:</strong> ALAD confers a strong risk of graft failure. Outcomes 90 days after ALAD onset further stratify risk of death or retransplant.
+      </div>
+    </article>
+	  
+  <article class="section" id="etiologies">
+	
       <h2>ALAD etiologies</h2>
-      <p>
-        ALAD is heterogeneous. It is best thought of as a syndrome with multiple possible causes rather than a single disease entity.
-      </p>
+      <figure class="figure float-right">
+        <img src="images/etiology.png" alt="ALAD etiology categories and outcomes">
+        <figcaption>ALAD spans alloimmune, non-alloimmune, and idiopathic causes.</figcaption>
+      </figure>
       <ul class="clean">
         <li><strong>Alloimmune ALAD:</strong> injury driven by the immune system, including acute cellular rejection and antibody-mediated rejection.</li>
-        <li><strong>Non-alloimmune ALAD:</strong> infection, airway complications, aspiration, medication toxicity, malignancy, and other non-immune insults.</li>
-<li><strong>Idiopa
+        <li><strong>Non-alloimmune ALAD:</strong> infection, aspiration, fluid overload, pleural effusion, pneumothorax, or airway complications. (Debate persists about whether diaphragm dysfunction, respiratory muscle weakness, frailty, pain, or weight gain cause ALAD.)</li>
+        <li><strong>Idiopathic ALAD:</strong> cases where no clear cause is found despite a thorough workup.</li>
+      </ul>
+      <p>
+        Emerging data from groups in <a href="https://www.jhltonline.org/article/S1053-2498(26)00473-0/fulltext">Vienna</a> and <a href="https://www.jhltonline.org/article/S1053-2498(26)00212-3/fulltext">San Francisco</a> show that idiopathic ALAD does not imply low-risk. In the available data, idiopathic and alloimmune ALAD both appear to be high-risk categories, and ALAD can also coexist with chronic lung allograft dysfunction (CLAD).
+      </p>
+      <div class="callout">
+      <strong>Practical point:</strong> Idiopathic and alloimmune ALAD indicate significantly increased risk, while a non-alloimmune cause can be reassuring.</div>
+    </article>
+  <article class="section" id="molecular">
+	
+      <h2>Molecular diagnostics and mechanisms</h2>
+      <figure class="figure float-left">
+        <img src="images/M0CD8.jpg" alt="Single-cell UMAP plots showing activated CD8 T cells and anti-inflammatory alveolar macrophages">
+        <figcaption>Single-cell profiling shows activated CD8+ T cells and reduced anti-inflammatory alveolar macrophages during ALAD.</figcaption>
+      </figure>
+      <p>
+        Airway transcriptomic work has identified gene-expression signatures that track with injury and outcome. One example is the <a href="https://www.jhltonline.org/article/S1053-2498(24)01743-1/fulltext">Airway Injury Score (AI2)</a>, which has been reported to predict mortality across cohorts. The signal appears to come from epithelial injury and inflammatory activation within the airway.
+      </p>
+      <p>
+        Single-cell studies add another layer. During ALAD, investigators have seen changes in cell composition in <a href ="https://www.jhltonline.org/article/S1053-2498(25)01842-X/fulltext">airway brushings</a> and <a href="https://www.jhltonline.org/article/S1053-2498(24)00047-0/fulltext">bronchoalveolar lavage fluid</a>, including expansion of activated CD8+ T cells, reductions in anti-inflammatory alveolar macrophages, and epithelial programs that look like ongoing injury. In some studies, the molecular features of ALAD overlap with rejection-associated patterns that are also seen in CLAD.
+      </p>
+      <p>
+        The broad biologic theme is imbalance: too much immune activation, too little protective macrophage activity, and an epithelial compartment that appears to be under stress. That combination may help explain why some episodes of ALAD recover while others progress to chronic dysfunction.
+      </p>
+      <div class="callout">
+        <strong>Bottom line:</strong> molecular profiling may eventually help distinguish reversible injury from episodes likely to progress.
+      </div>
+    </article>
+
+    <article class="section" id="takeaways">
+      <h2>Conclusions / take-aways</h2>
+      <p>
+        The 2026 consensus definition gives the field a simple and useful rule: a 10% decline in FEV1 from the maximum value in the prior six months should trigger an evaluation for ALAD.
+      </p>
+      <p>
+      ALAD is a state of risk, not a distinct disease entity. It should prompt a careful search for cause, because the event is associated with substantially higher graft-failure risk and can coexist with CLAD.</p>
+      <p>
+        The 90-day trajectory after ALAD identification helps stratify prognosis. Recovery is seen in 40% of recipients, but persistent or progressive dysfunction identifies a much higher-risk group.
+      </p>
+      <p>
+      The molecular data show that ALAD is an active biologic event involving epithelial injury, immune activation, and shifts in airway cellular composition. Because ALAD allows early identification and has meaningful short-term outcomes, it is a promising target for clinical trials.</p>
+    </article>
+	  <article class="section" id="bibliography">
+  <h2>References</h2>
+
+  <ol class="clean">
+
+    <li>
+      Juvet S, Snell GI, Bos S, Budev MM, Greenland JR, et al.
+      <a href="https://www.jhltonline.org/article/S1053-2498(26)01733-X/fulltext">
+        ISHLT Consensus Statement on Acute Lung Allograft Dysfunction (ALAD): Definition, Etiology, Diagnostic and Therapeutic Approaches, and Research Priorities.
+      </a>
+      J Heart Lung Transplant. 2026;45:e195.
+      doi:<a href="https://doi.org/10.1016/j.healun.2026.02.1677">10.1016/j.healun.2026.02.1677</a>
+    </li>
+
+    <li>
+      Lung Transplant Outcomes Group, Greenland JR, Shaver CM, Pandya K, Mulligan MS, Anderson MR, et al.
+      <a href="https://www.jhltonline.org/article/S1053-2498(26)00005-7/fulltext">
+        Acute lung allograft dysfunction predicts lung allograft failure: Construct validity of the 2026 International Society for Heart and Lung Transplantation spirometric definition.
+      </a>
+      J Heart Lung Transplant. 2026;45(5):797-806.
+      doi:<a href="https://doi.org/10.1016/j.healun.2026.01.006">10.1016/j.healun.2026.01.006</a>
+    </li>
+
+    <li>
+      Auner S, Boehm PM, Hillebrand C, Schwarz S, Hielle-Wittmann E, et al.
+      <a href="https://www.jhltonline.org/article/S1053-2498(26)00473-0/fulltext">
+        Phenotype Matters: Acute Lung Allograft Dysfunction and Outcomes After Lung Transplantation.
+      </a>
+      J Heart Lung Transplant. 2026;45(5):195.
+      doi:<a href="https://doi.org/10.1016/j.healun.2026.02.415">10.1016/j.healun.2026.02.415</a>
+    </li>
+
+    <li>
+      Walderich SJ, Calabrese D, Singer J, Hays S, Greenland J.
+      <a href="https://www.jhltonline.org/article/S1053-2498(26)00212-3/fulltext">
+        Graft Outcomes Following ALAD from Non-Alloimmune versus Idiopathic Etiologies.
+      </a>
+      J Heart Lung Transplant. 2026;45(5):71-72.
+      doi:<a href="https://doi.org/10.1016/j.healun.2026.02.154">10.1016/j.healun.2026.02.154</a>
+    </li>
+
+    <li>
+      Mohanty RP, Moghbeli K, Singer JP, Calabrese DR, Hays SR, et al.
+      <a href="https://www.jhltonline.org/article/S1053-2498(24)01743-1/fulltext">
+        Small airway brush gene expression predicts chronic lung allograft dysfunction and mortality.
+      </a>
+      J Heart Lung Transplant. 2024;43(11):1820-1832.
+      doi:<a href="https://doi.org/10.1016/j.healun.2024.07.010">10.1016/j.healun.2024.07.010</a>
+    </li>
+
+    <li>
+      Brunet-Ratnasingham E, Yellamilli S, Guo R, Mohanty RP, Duong A, et al.
+      <a href="https://www.jhltonline.org/article/S1053-2498(25)01842-X/fulltext">
+        Persistent and progressive acute lung allograft dysfunction is linked to cell compositional and transcriptional changes in small airways.
+      </a>
+      J Heart Lung Transplant. 2025;44(9):1482-1492.
+      doi:<a href="https://doi.org/10.1016/j.healun.2025.03.010">10.1016/j.healun.2025.03.010</a>
+    </li>
+
+    <li>
+      Calabrese DR, Ekstrand CA, Yellamilli S, Singer JP, Hays SR, et al.
+      <a href="https://www.jhltonline.org/article/S1053-2498(24)00047-0/fulltext">
+        Macrophage and CD8 T cell discordance are associated with acute lung allograft dysfunction progression.
+      </a>
+      J Heart Lung Transplant. 2024;43(7):1074-1086.
+      doi:<a href="https://doi.org/10.1016/j.healun.2024.02.007">10.1016/j.healun.2024.02.007</a>
+    </li>
+
+  </ol>
+</article>
+<footer>
+    Prepared as an HTML summary from "ALAD definitions and their molecular correlates: New ISHLT definitions and their airway transcriptional and biological associations," presented at the 2026 American Transplant Congress.
+    </footer>
+  </main>
+</body>
+</html>
