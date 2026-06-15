@@ -1,211 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ALAD: A New Framework for Lung Allograft Dysfunction</title>
-  <style>
-    :root {
-      --bg: #f7f7f3;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #5b6472;
-      --accent: #2f6f6d;
-      --accent-soft: #e6f2f1;
-      --border: #dde3e6;
-      --shadow: 0 10px 30px rgba(0,0,0,0.06);
-    }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
-      background: linear-gradient(180deg, #fafaf7 0%, var(--bg) 100%);
-      line-height: 1.65;
-    }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    .wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 40px 20px 72px;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, var(--accent) 0%, #4b8b87 100%);
-      color: white;
-      border-radius: 24px;
-      padding: 40px 34px;
-      box-shadow: var(--shadow);
-      margin-bottom: 28px;
-    }
-
-    .kicker {
-      display: inline-block;
-      background: rgba(255,255,255,0.16);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.88rem;
-      letter-spacing: 0.02em;
-      margin-bottom: 14px;
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(2rem, 4vw, 3.3rem);
-      line-height: 1.1;
-    }
-
-    .subtitle {
-      margin: 0;
-      font-size: 1.05rem;
-      max-width: 70ch;
-      opacity: 0.95;
-    }
-
-    .toc {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 22px 24px;
-      box-shadow: var(--shadow);
-      margin-bottom: 28px;
-    }
-
-    .toc h2, .section h2 {
-      margin-top: 0;
-      font-size: 1.35rem;
-    }
-
-    .toc ul {
-      margin: 0;
-      padding-left: 20px;
-      columns: 2;
-      gap: 24px;
-    }
-
-    .toc a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .toc a:hover { text-decoration: underline; }
-
-    .section {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 30px 28px;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .section p { margin: 0 0 14px; }
-    .section p:last-child { margin-bottom: 0; }
-
-    .callout {
-      background: var(--accent-soft);
-      border-left: 5px solid var(--accent);
-      padding: 16px 18px;
-      border-radius: 14px;
-      margin: 18px 0;
-    }
-
-    .section::after {
-      content: "";
-      display: block;
-      clear: both;
-    }
-
-    .figure {
-      margin: 0 0 16px 0;
-    }
-
-    .figure img {
-      width: 100%;
-      display: block;
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.10);
-      border: 1px solid var(--border);
-      background: #fff;
-    }
-
-    .figure figcaption {
-      font-size: 0.88rem;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    .figure.float-right {
-      float: right;
-      width: min(42%, 300px);
-      margin: 6px 0 14px 18px;
-    }
-
-    .figure.float-left {
-      float: left;
-      width: min(42%, 300px);
-      margin: 6px 18px 14px 0;
-    }
-
-    .figure-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      margin: 24px 0;
-    }
-
-    .figure-grid .figure {
-      margin: 0;
-    }
-
-    @media (max-width: 720px) {
-      .figure.float-right,
-      .figure.float-left {
-        float: none;
-        width: 100%;
-        margin: 18px 0;
-      }
-
-      .figure-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .callout strong { color: #1f4f4d; }
-
-    ul.clean {
-      margin: 10px 0 16px 20px;
-      padding: 0;
-    }
-
-    ul.clean li { margin-bottom: 10px; }
-
-    .tagline {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-top: 10px;
-    }
-
-    footer {
-      color: var(--muted);
-      font-size: 0.92rem;
-      text-align: center;
-      padding-top: 16px;
-    }
-
-    @media (max-width: 720px) {
-      .wrap { padding: 22px 14px 56px; }
-      .hero, .section, .toc { border-radius: 18px; }
-      .hero, .section { padding: 24px 20px; }
-      .toc ul { columns: 1; }
-    }
-	  .citation { display: block; margin-top: 6px; }
-   	  .citation a { color: var(--accent); text-decoration: none; }
-	  .citation a:hover { text-decoration: underline; }
-	  .refmeta { color: var(--muted); font-size: 0.95rem; }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="wrap">
@@ -267,11 +70,13 @@
         <figcaption>The six-month window captures slow-burn declines without sacrificing prognostic power.</figcaption>  
       </figure>
       </p>
+	<p>While 40% of recipients who were in the state of ALAD went on to recovery, persistence or progression were common. ALAD conferred a 4.9-fold increased risk of retransplantation or death. 
+	</p>
+<p><b>ALAD, BLAD, and/or CLAD</b></p>
       <p>
         Two related analyses show that ALAD remains important when it is considered alongside baseline lung allograft dysfunction (BLAD) or chronic lung allograft dysfunction (CLAD). While BLAD was associated poor outcomes compared to no-BLAD, ALAD was associated with increased risk independent of BLAD status.</p><p>Similarly, ALAD was an important risk factor for graft failure whether on not the recipient had CLAD. Patients with both signals tend to have the worst outcomes, indicating that ALAD is a distinct risk state.
         </p>
-      <p> While 40% of recipients who were in the state of ALAD went on to recovery, persistence or progression were common. ALAD conferred a 4.9-fold increased risk of retransplantation or death. </p>
-	    <p>&nbsp;</p>
+    <p>&nbsp;</p>
 <div class="figure-grid">
       <figure class="figure">
         <img src="images/alad_blad.png" alt="ALAD and BLAD combined survival curves">
@@ -284,7 +89,7 @@
       </div>
      
       <div class="callout">
-        <strong>Clinical takeaway:</strong> ALAD confers a strong risk of graft failure. Outcomes 90 days after ALAD onset further stratify risk of death or retransplant.
+        <strong>Clinical takeaway:</strong> ALAD confers a ~5-fold increased risk of graft failure. Outcomes 90 days after ALAD onset further stratify risk of death or retransplant.
       </div>
     </article>
 	  
@@ -323,22 +128,21 @@
         The broad biologic theme is imbalance: too much immune activation, too little protective macrophage activity, and an epithelial compartment that appears to be under stress. That combination may help explain why some episodes of ALAD recover while others progress to chronic dysfunction.
       </p>
       <div class="callout">
-        <strong>Bottom line:</strong> molecular profiling may eventually help distinguish reversible injury from episodes likely to progress.
-      </div>
+      <strong>Bottom line:</strong> &nbsp;Molecular profiling may soon help distinguish reversible injury from episodes likely to progress.</div>
     </article>
 
     <article class="section" id="takeaways">
-      <h2>Conclusions / take-aways</h2>
+      <h2>Conclusions and key take-aways</h2>
       <p>
         The 2026 consensus definition gives the field a simple and useful rule: a 10% decline in FEV1 from the maximum value in the prior six months should trigger an evaluation for ALAD.
       </p>
       <p>
-      ALAD is a state of risk, not a distinct disease entity. It should prompt a careful search for cause, because the event is associated with substantially higher graft-failure risk and can coexist with CLAD.</p>
+      ALAD is a state of risk, not a distinct disease entity, and can coexist with CLAD. It should prompt a careful search for cause, because the event is associated with substantially higher graft-failure risk.</p>
       <p>
         The 90-day trajectory after ALAD identification helps stratify prognosis. Recovery is seen in 40% of recipients, but persistent or progressive dysfunction identifies a much higher-risk group.
       </p>
       <p>
-      The molecular data show that ALAD is an active biologic event involving epithelial injury, immune activation, and shifts in airway cellular composition. Because ALAD allows early identification and has meaningful short-term outcomes, it is a promising target for clinical trials.</p>
+      Molecular data show that ALAD is an active biologic event involving epithelial injury, immune activation, and shifts in airway cellular composition. Because ALAD allows early identification and has meaningful short-term outcomes, it is a promising target for clinical trials.</p>
     </article>
 	  <article class="section" id="bibliography">
   <h2>References</h2>
@@ -411,7 +215,7 @@
   </ol>
 </article>
 <footer>
-    Prepared as an HTML summary from "ALAD definitions and their molecular correlates: New ISHLT definitions and their airway transcriptional and biological associations," presented at the 2026 American Transplant Congress.
+    HTML summary from "<a href="https://eppro02.ativ.me/web/page.php?page=session&project=ATC26&id=S277">ALAD definitions and their molecular correlates: New ISHLT definitions and their airway transcriptional and biological associations</a>," presented at the 2026 <a href="https://www.atcmeeting.org">American Transplant Congress</a>.
     </footer>
   </main>
 </body>
