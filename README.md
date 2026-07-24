@@ -1,10 +1,10 @@
 # ALAD Spirometric Classification in R
 
-This repository contains an R implementation of the 2025/2026 International Society for Heart and Lung Transplantation (ISHLT) spirometric definition of Acute Lung Allograft Dysfunction (ALAD).
+This repository contains an R implementation of the 2025/2026 International Society for Heart and Lung Transplantation (ISHLT) spirometric definition of [Acute Lung Allograft Dysfunction (ALAD)](https://ucsfgreenlandlab.github.io/ALAD/).
 
 The code was used to classify ALAD in UCSF and Lung Transplant Outcomes Group (LTOG) datasets and implements the consensus definitions evaluated in:
 
-> Greenland JR, Shaver CM, Pandya K, et al. *Acute lung allograft dysfunction predicts lung allograft failure: Construct validity of the 2026 International Society for Heart and Lung Transplantation spirometric definition.* Journal of Heart and Lung Transplantation. 2026.
+> Greenland JR, Shaver CM, Pandya K, et al. *Acute lung allograft dysfunction predicts lung allograft failure: Construct validity of the 2026 International Society for Heart and Lung Transplantation spirometric definition.* [Journal of Heart and Lung Transplantation](https://doi.org/10.1016/j.healun.2026.01.006). 2026.
 
 ## Overview
 
